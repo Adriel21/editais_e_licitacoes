@@ -1,8 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Iniciando
 
-First, run the development server:
+Primeiro, execute o projeto:
 
 ```bash
 npm run dev
@@ -14,23 +14,18 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) com seu navegador para visualizar o resultado.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Projeto em Desenvolvimento
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- O seguinte projeto utiliza versão 13+ do FrameWork NextJs, em que terá como objetivo de uso, a construção de um Front-End moderno e otimizado para os mecanismos de busca. O Front-End em desenvolvimento com Next, irá interagir com Services desenvolvidos com Linguagem Java e Ecossistema Spring.
 
-## Learn More
+## Detalhes do Projeto
 
-To learn more about Next.js, take a look at the following resources:
+- O projeto está utilizando a forma mais moderna de roteamento do Next - App Router;
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Para estilização, está sendo utilizado CSS Modules e Tailwind
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Utilização de linguagem JavaScript para o presente projeto Next
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Utilização e adaptação de padronização e design system do Governo, indicada na documentação [https://www.gov.br/ds/home]
