@@ -1,0 +1,26 @@
+.menuLateral{
+    width: 25%;
+    height: 100vh;
+    transition: transform 0.3s; /* Adicione uma transição suave para a propriedade transform */
+    transform: translateX(0); /* Posição inicial (menu aberto) */
+}
+
+/* Classe para ocultar o menu (menu fechado) */
+.menuFechado {
+    transform: translateX(-70%); /* Move o menu para fora da visão (menu fechado) */
+  }
+
+.titleMenu{
+    background-color: #0c326f;
+    height: 70px;
+    color: white;
+}
+
+.nav ul li{
+    color: #1351b4;
+}
+
+.angleIcon{
+    margin-right: 10px;
+    color: #0c326f;
+}

@@ -1,0 +1,32 @@
+/* .house-icon{
+    font-size: 16px;
+} */
+
+.angleIcon{
+    font-size: 10px;
+    margin-right: 10px;
+    margin-bottom: 1px;
+}
+
+.DynamicAngleIcon{
+    font-size: 10px;
+    margin-right: 10px;
+    margin-bottom: 1px;
+}
+
+
+
+.icon:hover{
+    color: #0c326f;
+}
+
+.routeColor{
+    color: #0c326f;
+    font-weight: 600;
+}
+
+.DynamicrouteColor{
+    margin-right: 10px;
+    color: #0c326f;
+    font-weight: 600;
+}
