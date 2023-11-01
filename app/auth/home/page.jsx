@@ -3,7 +3,7 @@ import Footer from '@/components/footer/footer';
 import MenuLateral from '@/components/menulateral/menulateral';
 import Table from '@/components/table/table';
 
-export default function Admin() {
+export default function Home() {
   return (
     <>
       <Header />

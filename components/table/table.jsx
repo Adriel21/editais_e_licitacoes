@@ -17,11 +17,12 @@ const Table = () => {
       <table className={'table-auto  divide-x border-collapse border border-slate-300'}>
         <thead>
           <tr className={`text-left bg-[#F0F0F0] p-5 ${style.trThead} border border-slate-300`}>
-            <th className={`p-4 ${style.customTdWidthEdital} border border-slate-300`}>Edital</th>
-            <th className={`p-4 ${style.customTdWidthObject} border border-slate-300`}>Objeto</th>
-            <th className='p-4 border border-slate-300'>Data da Publicação</th>
-            <th className='p-4 border border-slate-300'>Última Atualização</th>
-            <th className='p-4 border border-slate-300'>Operações</th>
+            <th className={`p-4 ${style.customTdWidthEdital} border border-slate-300`}>Código</th>
+            <th className={`p-4 ${style.customTdWidthObject} border border-slate-300`}>Data da Solicitação</th>
+            <th className='p-4 border border-slate-300'>Edital</th>
+            <th className='p-4 border border-slate-300'>Pessoa</th>
+            <th className='p-4 border border-slate-300'>Contato</th>
+            <th className='p-4 border border-slate-300'>Opções</th>
           </tr>
         </thead>
         <tbody className='border'>

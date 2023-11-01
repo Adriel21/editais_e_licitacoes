@@ -1,5 +1,5 @@
 .menuLateral{
-    width: 25%;
+    width: 18%;
     height: 100vh;
     transition: transform 0.3s; /* Adicione uma transição suave para a propriedade transform */
     transform: translateX(0); /* Posição inicial (menu aberto) */
