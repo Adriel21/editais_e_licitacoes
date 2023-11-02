@@ -134,22 +134,26 @@ const cadastroEdital = () => {
                     </label>
               </div> */}
               {/* disponibilidade */}
-              <div className="relative flex gap-x-3 mt-auto">
-                <div className="flex h-6 items-center">
-                  <input
-                    id="disponibility"
-                    name="disponibility"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                </div>
-                <div className="text-sm leading-6">
-                  <label htmlFor="disponibility" className="font-bold text-gray-900">
-                    Disponibilidade
-                  </label>                
+              <div className="md:col-span-1 col-span-full">
+                <div className="relative flex gap-x-3 mt-auto">
+                  <div className="flex h-6 items-center">
+                    <input
+                      id="disponibility"
+                      name="disponibility"
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    />
+                  </div>
+                  <div className="text-sm leading-6">
+                    <label htmlFor="disponibility" className="font-bold text-gray-900">
+                      Disponibilidade
+                    </label>                
+                  </div>
                 </div>
               </div>
                {/* disponibilidade */}
+              <div className="md:col-span-1 col-span-full">
+
                <div className="relative flex gap-x-3 mt-auto">
                 <div className="flex h-6 items-center">
                   <input
@@ -164,6 +168,7 @@ const cadastroEdital = () => {
                     Visibilidade
                   </label>                
                 </div>
+              </div>
               </div>
 
               {/* Botoões */}
