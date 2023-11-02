@@ -53,7 +53,7 @@ const Auth = () => {
      
             if (typeof window !== 'undefined') {
               // Verifique se o código é executado no lado do cliente antes de redirecionar
-              router.push('/auth/home');
+              router.push('/home');
             }
 
           } else {
