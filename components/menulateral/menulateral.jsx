@@ -30,7 +30,9 @@ const MenuLateral = () => {
         <nav className={style.nav}>
             <ul className='ps-4'>
                 <span className='flex items-center justify-between'>
-                    <li className='mt-4 mb-4'>Item do Menu</li>
+                    <Link href={'home/edital/cadastro'}>
+                        <li className='mt-4 mb-4'>Adicionar Edital</li>
+                    </Link>
                     <FontAwesomeIcon icon={['fas', 'angle-right']} color='#a49fa3' className={style.angleIcon} />
                 </span>
                 <hr />

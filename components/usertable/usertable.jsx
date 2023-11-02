@@ -18,7 +18,7 @@ const UserTable = async () => {
     console.error('Erro ao buscar os dados:', error);
   }
 
-  // let posts = data.slice(-5);
+  let posts = data.slice(-5);
 
   return (
     <>

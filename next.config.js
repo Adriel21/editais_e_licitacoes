@@ -6,6 +6,10 @@ const nextConfig = {
             source: '/home',
             destination: '/auth/home',
           },
+          {
+            source: '/home/edital/cadastro',
+            destination: '/auth/home/edital/cadastro',
+          },
           // Adicione outras regras de reescrita aqui, se necessário
         ];
       },
