@@ -33,3 +33,7 @@
     color: white;
     font-weight: bold;
   }
+
+  .button:hover{
+    background-color: hsl(217, 81%, 39%, 90%);
+  }
