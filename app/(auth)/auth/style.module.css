@@ -1,0 +1,35 @@
+.input{
+    width: 360px;
+}
+
+.input:focus {
+    border-color: #1351B4;
+    outline: none; /* Remova a borda de foco padrão do navegador, se necessário */
+  }
+
+.input::placeholder {
+    overflow: hidden;
+    color: #000;
+    font-variant-numeric: lining-nums proportional-nums;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: Rawline;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .button{
+    display: inline-flex;
+    height: 39px;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: var(--blue-warm-vivid-blue-warm-vivid-70, #1351B4);
+    color: white;
+    font-weight: bold;
+  }

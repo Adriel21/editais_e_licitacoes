@@ -1,9 +1,18 @@
+'use client'
+import { useRouter } from 'next/router';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import MenuLateral from '@/components/menulateral/menulateral';
 import Table from '@/components/table/table';
 
 export default function Home() {
+
+  const router = useRouter();
+
+  // Redirecione para `/home` quando acessar `/auth/home`
+  if (router.asPath === '/auth/home') {
+    router.replace('/home');
+  }
   return (
     <>
       <Header />
