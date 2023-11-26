@@ -4,17 +4,14 @@ import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import MenuLateral from "@/components/menulateral/menulateral";
 import axios from "axios";
-import { useAuth } from '@/context/auth_context';
 import { useRouter } from 'next/navigation'; // Importe o hook useRouter
 
 const CadastroEdital = () => {
-  const { isValid } = useAuth();
   const router = useRouter(); // Inicialize o hook useRouter
 
   // Verifique o estado de autenticação e redirecione se não estiver autenticado
-  if (!isValid) {
-    router.push('/auth'); // Redireciona para a rota '/auth'
-  } else{
+  
+
   return (
     <>
       <Header />
@@ -204,7 +201,6 @@ const CadastroEdital = () => {
     </>
   );
             }
-};
 
 export default CadastroEdital;
 

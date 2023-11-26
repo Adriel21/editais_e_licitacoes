@@ -14,13 +14,11 @@ config.autoAddCss = false
 
 export default function RootLayout({ children }) {
   return (
-    <AuthProvider>
       <html lang="pt-br">
         <head>
         <link href = "https://fonts.cdnfonts.com/css/rawline" rel ="stylesheet" />
         </head>
         <body>{children}</body>
       </html>
-    </AuthProvider>
   )
 }

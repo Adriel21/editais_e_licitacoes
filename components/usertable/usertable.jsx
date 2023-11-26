@@ -18,7 +18,7 @@ const UserTable = async () => {
     console.error('Erro ao buscar os dados:', error);
   }
 
-  let posts = data.slice(-5);
+  // let posts = data.slice(-5);
 
   return (
     <>
@@ -50,14 +50,14 @@ const UserTable = async () => {
               </tr>
             </thead>
             <tbody className="border">
-              {posts.map((post, index) => (
-                <tr key={index}>
-                  <td className="p-4 border border-slate-300">{post.title}</td>
-                  <td className="p-4 border border-slate-300">{post.body}</td>
-                  <td className="p-4 border border-slate-300">{post.userId}</td>
+            
+                <tr>
+                  <td className="p-4 border border-slate-300"></td>
+                  <td className="p-4 border border-slate-300"></td>
+                  <td className="p-4 border border-slate-300"></td>
                   <td className="p-4 border border-slate-300">22/09/2023 07:50:11</td>
                 </tr>
-              ))}
+         
             </tbody>
           </table>
           <div className="flex items-center justify-between" style={{ marginBottom: '50px' }}>
