@@ -66,7 +66,7 @@ const Auth = () => {
               // Construa a string de data no formato UTC para o cookie
               const expirationDateString = expirationDate.toUTCString();
 
-           document.cookie = `token=${tokenData}; expires=${expirationDateString}; Path=/`;
+              document.cookie = `token=${tokenData}; expires=${expirationDateString}; Path=/; SameSite=Strict`;
      
               if (typeof window !== 'undefined') {
                 //  Verifique se o código é executado no lado do cliente antes de redirecionar
@@ -74,7 +74,6 @@ const Auth = () => {
               }
 
           } else {
-            // console.error("Erro ao fazer login:", response.status, response.statusText);
             alert('Usuário Inválido');
           }
         } catch (error) {
@@ -84,7 +83,7 @@ const Auth = () => {
 
       if(tokenValue) {
         router.push('/home');
-        console.log(tokenValue)
+        // console.log(tokenValue)
       } else { 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">

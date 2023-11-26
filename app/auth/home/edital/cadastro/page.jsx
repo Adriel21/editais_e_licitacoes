@@ -1,17 +1,36 @@
 "use client";
-
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import MenuLateral from "@/components/menulateral/menulateral";
-import axios from "axios";
-import { useRouter } from 'next/navigation'; // Importe o hook useRouter
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation'; 
 
 const CadastroEdital = () => {
-  const router = useRouter(); // Inicialize o hook useRouter
+   const router = useRouter(); 
 
-  // Verifique o estado de autenticação e redirecione se não estiver autenticado
+  const [tokenValue, setTokenValue] = useState('');
+  useEffect(() => {
+    // Função para obter o valor de um cookie por nome
+    const getCookie = (name) => {
+      const cookies = document.cookie.split(';');
+      for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.trim().split('=');
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+      return null;
+    };
+
+    // Exemplo: Obtendo o valor do cookie chamado 'token'
+    setTokenValue(getCookie('token'));
+    console.log('Valor do cookie "token":', tokenValue);
+  }, []); // Executa apenas uma vez ao montar o componente
+
+  
   
 
+  
   return (
     <>
       <Header />
@@ -25,7 +44,7 @@ const CadastroEdital = () => {
           <div className="w-full  rounded overflow-hidden shadow-lg mx-auto p-3 bg-white">
             <form
               className="grid grid-cols-4 gap-4"
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
             >
               {/* nome do edital */}
               <div class="md:col-span-2 col-span-full ">
@@ -200,35 +219,8 @@ const CadastroEdital = () => {
       <Footer />
     </>
   );
-            }
 
+          }
+           
 export default CadastroEdital;
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  // Get form data
-  const formData = new FormData(event.target);
-
-  // Create an object from the form data
-  const data = {};
-  formData.forEach((value, key) => {
-    data[key] = value;
-  });
-  console.log(data);
-
-  try {
-    // Make a POST request to your Java Spring API endpoint
-    const response = await axios.post(" http://localhost:8080/edital", data);
-
-    // Handle the response as needed
-    if (response.status === 200) {
-      alert(response.mensage);
-    } else {
-      // Handle other status codes as needed
-    }
-  } catch (error) {
-    // Handle errors, e.g., show an error message
-    console.error(error);
-  }
-};
