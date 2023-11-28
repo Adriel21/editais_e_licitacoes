@@ -1,25 +1,30 @@
-"use client";
-
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import MenuLateral from "@/components/menulateral/menulateral";
-import axios from "axios";
-import { useAuth } from '@/context/auth_context';
-import { useRouter } from 'next/navigation'; // Importe o hook useRouter
+import api from '@/app/services/api';
+import SideBar from "@/components/sidebar/sidebar";
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers';
 
-const CadastroEdital = () => {
-  const { isValid } = useAuth();
-  const router = useRouter(); // Inicialize o hook useRouter
+const CadastroEdital = async () => {
 
-  // Verifique o estado de autenticação e redirecione se não estiver autenticado
-  if (!isValid) {
-    router.push('/auth'); // Redireciona para a rota '/auth'
-  } else{
+   const cookieStore = cookies()
+   const token = cookieStore.get('token')
+ 
+   let data;
+   try {
+     data = await api.fetchData('', token.value, 'GET'); // passando o token para trazer os dados do usuário
+   } catch (error) {
+     console.error('Erro ao buscar os dados:', error);
+   }
+ 
+   if(!data) {
+    redirect('/auth');
+   }else{
   return (
     <>
       <Header />
       <main className="flex">
-        <MenuLateral />
+        <SideBar />
         <section className="container px-5 bg-gray-100">
           <h1 className='my-4  font-bol text-1xl md:text-2xl lg:text-4xl dark:text-white"'>
             Cadastro de edital
@@ -28,7 +33,7 @@ const CadastroEdital = () => {
           <div className="w-full  rounded overflow-hidden shadow-lg mx-auto p-3 bg-white">
             <form
               className="grid grid-cols-4 gap-4"
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
             >
               {/* nome do edital */}
               <div class="md:col-span-2 col-span-full ">
@@ -203,36 +208,11 @@ const CadastroEdital = () => {
       <Footer />
     </>
   );
-            }
-};
 
+      }
+
+        }
+          
+           
 export default CadastroEdital;
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  // Get form data
-  const formData = new FormData(event.target);
-
-  // Create an object from the form data
-  const data = {};
-  formData.forEach((value, key) => {
-    data[key] = value;
-  });
-  console.log(data);
-
-  try {
-    // Make a POST request to your Java Spring API endpoint
-    const response = await axios.post(" http://localhost:8080/edital", data);
-
-    // Handle the response as needed
-    if (response.status === 200) {
-      alert(response.mensage);
-    } else {
-      // Handle other status codes as needed
-    }
-  } catch (error) {
-    // Handle errors, e.g., show an error message
-    console.error(error);
-  }
-};

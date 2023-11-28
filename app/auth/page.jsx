@@ -1,23 +1,41 @@
 'use client'
 import Image from 'next/image';
 import styles from './style.module.css';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importe o hook useRouter
-import { useAuth } from '@/context/auth_context';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; 
 
 
 const Auth = () => {
-  const router = useRouter(); // Inicialize o hook useRouter
+
+  const [tokenValue, setTokenValue] = useState('');
+  useEffect(() => {
+    // Função para obter o valor de um cookie por nome
+    const getCookie = (name) => {
+      const cookies = document.cookie.split(';');
+      for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.trim().split('=');
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+      return null;
+    };
+
+    // Exemplo: Obtendo o valor do cookie chamado 'token'
+    setTokenValue(getCookie('token'));
+    console.log('Valor do cookie "token":', tokenValue);
+  }, []); // Executa apenas uma vez ao montar o componente
+
+ 
+
+  const router = useRouter(); 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { setToken, setIsValid } = useAuth();
  
-  // Função para atualizar o estado 'login' quando o campo de usuário muda
   const handleLoginChange = (event) => {
     setLogin(event.target.value);
   };
 
-  // Função para atualizar o estado 'password' quando o campo de senha muda
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -39,31 +57,34 @@ const Auth = () => {
 
           if (response.ok) {
             const data = await response.json();
-            const token = data.token; // Extrai o token da resposta
-            // Quando o usuário faz login com sucesso
-            setToken(token);
-            setIsValid(data.validate);
+            const tokenData = data.token; // Extrai o token da resposta
 
-            // Defina a data de expiração do cookie (por exemplo, 2 horas a partir do momento atual)
-            const expirationDate = new Date();
-            expirationDate.setHours(expirationDate.getHours() + 2); // Defina o tempo desejado de expiração
-          // Armazene o token em um cookie HTTP-only
-          document.cookie = `token=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
+             // Defina a data de expiração para 2 horas a partir do momento atual
+              const expirationDate = new Date();
+              expirationDate.setHours(expirationDate.getHours() + 2);
 
+              // Construa a string de data no formato UTC para o cookie
+              const expirationDateString = expirationDate.toUTCString();
+
+              document.cookie = `token=${tokenData}; expires=${expirationDateString}; Path=/; SameSite=Strict`;
      
-            if (typeof window !== 'undefined') {
-              // Verifique se o código é executado no lado do cliente antes de redirecionar
-              router.push('/home');
-            }
+              if (typeof window !== 'undefined') {
+                //  Verifique se o código é executado no lado do cliente antes de redirecionar
+                router.push('/home');
+              }
 
           } else {
-            console.error("Erro ao fazer login:", response.status, response.statusText);
+            alert('Usuário Inválido');
           }
         } catch (error) {
           console.error("Deu ruim", error.message);
         }
       };
 
+      if(tokenValue) {
+        router.push('/home');
+        // console.log(tokenValue)
+      } else { 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-100">
@@ -85,8 +106,8 @@ const Auth = () => {
                 id="usuario"
                 className={`${styles.input} border rounded-md w-full py-2 px-3`}
                 placeholder="Usuário"
-                value={login} // Defina o valor do campo com o estado 'login'
-                onChange={handleLoginChange} // Configure a função de tratamento de evento
+                value={login} 
+                onChange={handleLoginChange} 
               />
             </div>
   
@@ -97,8 +118,8 @@ const Auth = () => {
                 id="senha"
                 className={`${styles.input} border rounded-md w-full py-2 px-3`}
                 placeholder="***"
-                value={password} // Defina o valor do campo com o estado 'password'
-                onChange={handlePasswordChange} // Configure a função de tratamento de evento
+                value={password} 
+                onChange={handlePasswordChange} 
               />
             </div>
 
@@ -107,6 +128,7 @@ const Auth = () => {
         </div>
       </div>
     );
+   } 
   };
   
   export default Auth;

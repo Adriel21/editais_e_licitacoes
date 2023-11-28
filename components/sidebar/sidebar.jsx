@@ -11,7 +11,7 @@ import Link from "next/link"
 library.add(fas);
 
 
-const MenuLateral = () => {
+const SideBar = () => {
     const [menuAberto, setMenuAberto] = useState(true);
 
     const toggleMenu = () => {
@@ -52,5 +52,5 @@ const MenuLateral = () => {
   )
 }
 
-export default MenuLateral
+export default SideBar
 
