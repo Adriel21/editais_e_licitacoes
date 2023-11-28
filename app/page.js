@@ -15,8 +15,6 @@ export default function Home() {
         <UserTable />
       </main>
       <Footer />
-      {/* <BreadCrumbs /> */}
-      {/* <hr className='mt-3 ms-5'></hr> */}
     </>
   )
 }

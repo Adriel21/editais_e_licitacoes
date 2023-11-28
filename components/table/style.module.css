@@ -9,3 +9,28 @@
 .customTdWidthObject{
     width: 500px;
 }
+
+.customTable{
+    margin-bottom: 50vh;
+}
+
+.customTable td{
+    text-align: center;
+}
+
+.customTable td {
+    max-width: 280px;
+    overflow-wrap: break-word;
+    width: auto;
+  }
+  
+  .customTable th {
+    max-width: 280px;
+    overflow-wrap: break-word;
+    width: auto;
+  }
+  
+  
+  .breakWord {
+    overflow-wrap: break-word; /* ou word-wrap: break-word; */
+  }
