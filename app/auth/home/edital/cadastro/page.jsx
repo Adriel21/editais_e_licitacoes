@@ -5,21 +5,60 @@ import SideBar from "@/components/sidebar/sidebar";
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers';
 
-const CadastroEdital = async () => {
 
-   const cookieStore = cookies()
-   const token = cookieStore.get('token')
- 
-   let data;
-   try {
-     data = await api.fetchData('', token.value, 'GET'); // passando o token para trazer os dados do usuário
-   } catch (error) {
-     console.error('Erro ao buscar os dados:', error);
-   }
- 
-   if(!data) {
-    redirect('/auth');
-   }else{
+
+
+
+const CadastroEdital = async () => {
+  const router = useRouter(); 
+
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const cookieToken = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    setToken(cookieToken);
+  
+  }, []);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    number: '',
+    id: null,
+    description: '',
+    //datePublication: '',
+    //dateLastUpdate: '',
+    disponibility: false,
+    visibility: false,
+    userId: 1
+  });
+
+//verificas as mudanças no formulario e adiciona ao seu objeto
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData)
+    try {
+      const response = await fetch('http://localhost:8080/edital', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+  
+     console.log(response)
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+    }
+  };
+  
   return (
     <>
       <Header />
@@ -33,10 +72,10 @@ const CadastroEdital = async () => {
           <div className="w-full  rounded overflow-hidden shadow-lg mx-auto p-3 bg-white">
             <form
               className="grid grid-cols-4 gap-4"
-              // onSubmit={handleSubmit}
+              onSubmit={handleSubmit}
             >
               {/* nome do edital */}
-              <div class="md:col-span-2 col-span-full ">
+              <div className="md:col-span-2 col-span-full ">
                 <label
                   htmlFor="name"
                   className="block text-sm font-bold leading-6 text-gray-900"
@@ -45,9 +84,10 @@ const CadastroEdital = async () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="name"
-                    name="name"
-                    id="first-name"
+                    type="text"
+                    name="name"                   
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="block w-full  rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -64,7 +104,8 @@ const CadastroEdital = async () => {
                   <input
                     type="text"
                     name="number"
-                    id="number"
+                    value={formData.number}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -81,8 +122,8 @@ const CadastroEdital = async () => {
                   <input
                     readOnly
                     type="text"
-                    name="id"
-                    id="id"
+                    value={formData.id}
+                    onChange={handleInputChange}
                     className=" block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -97,39 +138,40 @@ const CadastroEdital = async () => {
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="description"
-                    name="description"
-                    rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
+                     id="description"
+                     name="description"
+                     rows={3}
+                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                     value={formData.description}
+                     onChange={handleInputChange}
                   />
                 </div>
               </div>
               {/* data de publicação */}
-               <div className="md:col-span-2 col-span-full">
+               <div className={`md:col-span-2 col-span-full ${formData.id === null ? 'hidden' : 'block'}`}>
                 <label
                   htmlFor="datePublication"
                   className="block text-sm font-bold leading-6 text-gray-900"
                 >
                   Data da publicação
                 </label>
-                <div className="mt-2">
-                <input
-                    
+                <div className="mt-2 ">
+                <input                    
                     type="datetime-local"
                     name="datePublication"
                     id="datePublication"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    disabled={formData.id === null}
                   />
                 </div>
               </div> 
-              {/* Data da ultima atualização */}
-            <div className="md:col-span-2 col-span-full">
+               {/*Data da ultima atualização */}
+            <div className={`md:col-span-2 col-span-full ${formData.id === null ? 'hidden' : 'block'}`}>
                 <label
                   htmlFor="dateLastUpdate"
                   className="block text-sm font-bold leading-6 text-gray-900 "
                 >
-                  Data da publicação
+                  Data da ultima atualização
                 </label>
                 <div className="mt-2">
                 <input                    
@@ -137,6 +179,7 @@ const CadastroEdital = async () => {
                     name="dateLastUpdate"
                     id="dateLastUpdate"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    disabled={formData.id === null}
                   />
                 </div>
               </div>
@@ -155,6 +198,8 @@ const CadastroEdital = async () => {
                       id="disponibility"
                       name="disponibility"
                       type="checkbox"
+                      value={formData.disponibility}
+                    onChange={handleInputChange}
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                   </div>
@@ -170,18 +215,19 @@ const CadastroEdital = async () => {
 
                <div className="relative flex gap-x-3 mt-auto">
                 <div className="flex h-6 items-center">
-                  <input
-                    id="visibility"
+                  <input                   
                     name="visibility"
                     type="checkbox"
+                    value={formData.visibility}
+                    onChange={handleInputChange}
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                 </div>
                 <div className="text-sm leading-6">
-                  <label htmlFor="visibility" className="font-bold text-gray-900">
-                    Visibilidade
-                  </label>                
-                </div>
+                    <label htmlFor="disponibility" className="font-bold text-gray-900">
+                      Visibilidade
+                    </label>                
+                  </div>
               </div>
               </div>
 

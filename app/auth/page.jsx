@@ -53,7 +53,7 @@ const Auth = () => {
         };
 
         try {
-          const response = await fetch("http://192.168.18.60:8080/auth/login", options);
+          const response = await fetch("http://localhost:8080/auth/login", options);
 
           if (response.ok) {
             const data = await response.json();
