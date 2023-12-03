@@ -27,8 +27,13 @@ const Auth = () => {
   }, []); // Executa apenas uma vez ao montar o componente
 
  
-
   const router = useRouter(); 
+
+  if(tokenValue) {
+    router.push('/home');
+    // console.log(tokenValue)
+  }
+  
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
  
@@ -58,6 +63,7 @@ const Auth = () => {
           if (response.ok) {
             const data = await response.json();
             const tokenData = data.token; // Extrai o token da resposta
+            const userData = data.user.id;
 
              // Defina a data de expiração para 2 horas a partir do momento atual
               const expirationDate = new Date();
@@ -66,7 +72,17 @@ const Auth = () => {
               // Construa a string de data no formato UTC para o cookie
               const expirationDateString = expirationDate.toUTCString();
 
-              document.cookie = `token=${tokenData}; expires=${expirationDateString}; Path=/; SameSite=Strict`;
+              document.cookie = `token=${tokenData};  expires=${expirationDateString}; Path=/; SameSite=Strict`;
+
+              // Crie uma nova data de expiração para o segundo cookie, se necessário
+              const expirationDate2 = new Date();
+              expirationDate2.setHours(expirationDate2.getHours() + 24); // Por exemplo, 24 horas a partir de agora
+
+              // Construa a string de data no formato UTC para o segundo cookie
+              const expirationDateString2 = expirationDate2.toUTCString();
+
+              // Defina o segundo cookie
+              document.cookie = `user=${userData}; expires=${expirationDateString2}; Path=/; SameSite=Strict`;
      
               if (typeof window !== 'undefined') {
                 //  Verifique se o código é executado no lado do cliente antes de redirecionar
@@ -81,10 +97,7 @@ const Auth = () => {
         }
       };
 
-      if(tokenValue) {
-        router.push('/home');
-        // console.log(tokenValue)
-      } else { 
+    
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-100">
@@ -129,7 +142,7 @@ const Auth = () => {
       </div>
     );
    } 
-  };
+
   
   export default Auth;
   

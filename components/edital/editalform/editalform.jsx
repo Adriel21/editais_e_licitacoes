@@ -1,5 +1,6 @@
 'use client'
 
+import api from "@/app/services/api";
 import { useState, useEffect } from "react";
 
 const EditalForm = ({token}) => {
@@ -28,19 +29,12 @@ const EditalForm = ({token}) => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
+   
         try {
-          const response = await fetch('http://localhost:8080/edital', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(formData),
-          });
-      
-         console.log(response)
+          const response = await api.fetchData(`edital`, token, 'POST', JSON.stringify(formData)); // passando o token para trazer os dados do usuário
+          console.log(response);
         } catch (error) {
-          console.error('Erro ao enviar formulário:', error);
+          console.error('Erro ao buscar os dados:', error);
         }
       };
       

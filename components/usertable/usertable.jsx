@@ -1,24 +1,30 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import apiService from '../../app/services/api';
+import api from '@/app/services/api';
 import style from './style.module.css';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Pagination from '../pagination/pagination';
 import Link from 'next/link';
 
-// Adicione os ícones que deseja usar à biblioteca
 library.add(fas);
 
 const UserTable = async () => {
-  let data;
 
-  try {
-    data = await apiService.fetchData(''); // Use a função do módulo de serviço
-    // Faça algo com os dados aqui
-  } catch (error) {
-    console.error('Erro ao buscar os dados:', error);
+   
+  const editalList = async () => {
+    try {
+      const data = await api.fetchDataPublic('index', 'GET'); // Use a função do módulo de serviço
+      return data.body;
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
+      return null
+    }
   }
 
-  // let posts = data.slice(-5);
+  let data = await editalList();
+  
+  console.log(data)
+
 
   return (
     <>
@@ -51,39 +57,19 @@ const UserTable = async () => {
             </thead>
             <tbody className="border">
             
-                <tr>
-                  <td className="p-4 border border-slate-300"></td>
-                  <td className="p-4 border border-slate-300"></td>
-                  <td className="p-4 border border-slate-300"></td>
-                  <td className="p-4 border border-slate-300">22/09/2023 07:50:11</td>
-                </tr>
+               {data.map(({ id, name, number, description, datePublication }) => (
+              <tr key={id}>
+                <td className="p-4 border border-slate-300">{number}</td>
+                <td className="p-4 border border-slate-300">{name}</td>
+                <td className="p-4 border border-slate-300">{description}</td>
+                <td className="p-4 border border-slate-300">{datePublication}</td>
+              </tr>
+            ))}    
+
          
             </tbody>
           </table>
-          <div className="flex items-center justify-between" style={{ marginBottom: '50px' }}>
-            <div className={`flex items-center mt-2 gap-3`}>
-              <label for="results">Exibir</label>
-              <select name="results" id="">
-                <option value="">5</option>
-                <option value="">10</option>
-                <option value="">25</option>
-                <option value="">50</option>
-                <option value="">100</option>
-              </select>
-              <span className={`${style.divisor}`}></span>
-              <p>1-10 de 100 itens</p>
-            </div>
-            <div className={`flex items-center mt-2 gap-3`}>
-              <label for="pagination">Página</label>
-              <select name="pagination" id="">
-                <option value="">5</option>
-                <option value="">10</option>
-                <option value="">25</option>
-                <option value="">50</option>
-                <option value="">100</option>
-              </select>
-            </div>
-          </div>
+        
         </div>
       </section>
     </>
