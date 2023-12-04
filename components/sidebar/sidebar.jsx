@@ -30,7 +30,7 @@ const SideBar = () => {
         <nav className={style.nav}>
             <ul className='ps-4'>
                 <span className='flex items-center justify-between'>
-                    <Link href={'home/edital/cadastro'}>
+                    <Link href={'http://localhost:3000/home/edital/cadastro'}>
                         <li className='mt-4 mb-4'>Adicionar Edital</li>
                     </Link>
                     <FontAwesomeIcon icon={['fas', 'angle-right']} color='#a49fa3' className={style.angleIcon} />

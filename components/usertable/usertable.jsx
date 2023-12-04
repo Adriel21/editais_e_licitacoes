@@ -1,31 +1,44 @@
+'use client'
+import { useState, useEffect } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import api from '@/app/services/api';
 import style from './style.module.css';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Pagination from '../pagination/pagination';
 import Link from 'next/link';
 
 library.add(fas);
 
-const UserTable = async () => {
+const UserTable = () => {
 
-   
-  const editalList = async () => {
+   const [data, setData] = useState([]);
+   const [limit, setLimit] = useState();
+
+   const fetchData = async () => {
     try {
-      const data = await api.fetchDataPublic('index', 'GET'); // Use a função do módulo de serviço
-      return data.body;
+      const endpoint = limit ? `http://localhost:8080/index/list?size=${limit}` : `http://localhost:8080/index/list`
+      const response = await fetch(endpoint);
+      const result = await response.json();
+      setData(result.body.content);
     } catch (error) {
-      console.error('Erro ao buscar os dados:', error);
-      return null
+      console.log('Erro ao buscar os dados');
     }
-  }
+  };
 
-  let data = await editalList();
+  const handleResultsChange = (event) => {
+    const selectedResults = parseInt(event.target.value, 10);
+    setLimit(selectedResults);
+  };
+
+  const initializeData = async () => {
+    await fetchData();
+  };
+
+  useEffect(() => {
+    initializeData();
+  }, [limit]); // Re-run effect when limit changes
+
   
-  console.log(data)
-
-
   return (
     <>
       <section className="mt-5 mb-5 flex items-center justify-center">
@@ -69,7 +82,30 @@ const UserTable = async () => {
          
             </tbody>
           </table>
-        
+          <div className="flex items-center justify-between" style={{ marginBottom: '50px' }}>
+            <div className={`flex items-center mt-2 gap-3`}>
+              <label for="results">Exibir</label>
+              <select name="results" id="results" onChange={handleResultsChange}>
+              <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <span className={`${style.divisor}`}></span>
+              <p>1-10 de 100 itens</p>
+            </div>
+            <div className={`flex items-center mt-2 gap-3`}>
+              <label for="pagination">Página</label>
+              <select name="pagination" id="" >
+                <option value="">5</option>
+                <option value="">10</option>
+                <option value="">25</option>
+                <option value="">50</option>
+                <option value="">100</option>
+              </select>
+            </div>
+          </div>
         </div>
       </section>
     </>

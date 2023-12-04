@@ -14,19 +14,18 @@ const Home = async () => {
 
   let data;
   try {
-    data = await api.fetchData(`auth/validate?id=${parseInt(userId.value)}`, token.value, 'POST'); // passando o token para trazer os dados do usuário
+    data = await api.fetchData(`auth/validate?id=${parseInt(userId.value)}`, token.value, 'GET'); // passando o token para trazer os dados do usuário
     console.log(data);
   } catch (error) {
     console.error('Erro ao buscar os dados:', error);
   }
 
 
-  if (!data) {
-    console.error('Token ou userId ausente. Redirecionando para a página de login.')
-    redirect('/auth');
-  }
-  
-      return (
+   if (!data) {
+     console.error('Token ou userId ausente. Redirecionando para a página de login.')
+     redirect('/auth');
+   }
+        return (
         <>
           <Header />
           <main className='flex'>

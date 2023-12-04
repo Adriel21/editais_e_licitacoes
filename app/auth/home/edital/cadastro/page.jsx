@@ -16,7 +16,7 @@ const CadastroEdital = async () => {
 
   let data;
   try {
-    data = await api.fetchData(`auth/validate?id=${parseInt(userId.value)}`, token.value, 'POST'); // passando o token para trazer os dados do usuário
+    data = await api.fetchData(`auth/validate?id=${parseInt(userId.value)}`, token.value, 'GET'); // passando o token para trazer os dados do usuário
     alert('Edital cadastrado com sucesso!')
   } catch (error) {
     console.error('Erro ao buscar os dados:', error);
