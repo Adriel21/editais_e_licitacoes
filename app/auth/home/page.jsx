@@ -28,7 +28,7 @@ const Home = async () => {
         return (
         <>
           <Header />
-          <main className='flex'>
+          <main className=''>
               <Table />
           </main>
           <Footer />
