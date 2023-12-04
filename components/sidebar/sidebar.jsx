@@ -33,17 +33,16 @@ const SideBar = () => {
                     <Link href={'http://localhost:3000/home/edital/cadastro'}>
                         <li className='mt-4 mb-4'>Adicionar Edital</li>
                     </Link>
-                    <FontAwesomeIcon icon={['fas', 'angle-right']} color='#a49fa3' className={style.angleIcon} />
                 </span>
                 <hr />
                 <span className='flex items-center justify-between'>
                     <li className='mt-4 mb-4'>Item do Menu</li>
-                    <FontAwesomeIcon icon={['fas', 'angle-right']} color='#a49fa3' className={style.angleIcon} />
+                    
                 </span>                
                 <hr />
                 <span className='flex items-center justify-between'>
                     <li className='mt-4 mb-4'>Item do Menu</li>
-                    <FontAwesomeIcon icon={['fas', 'angle-right']} color='#a49fa3' className={style.angleIcon} />
+                    
                 </span>                
                 <hr />
             </ul>

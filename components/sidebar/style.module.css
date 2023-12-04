@@ -3,6 +3,7 @@
     height: 100vh;
     transition: transform 0.3s; /* Adicione uma transição suave para a propriedade transform */
     transform: translateX(0); /* Posição inicial (menu aberto) */
+    background-color: white;
 }
 
 /* Classe para ocultar o menu (menu fechado) */
@@ -15,6 +16,7 @@
     height: 70px;
     color: white;
 }
+
 
 .nav ul li{
     color: #1351b4;

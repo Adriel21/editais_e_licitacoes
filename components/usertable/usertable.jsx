@@ -12,6 +12,7 @@ library.add(fas);
 const UserTable = () => {
 
    const [data, setData] = useState([]);
+   const [count, setCount] = useState();
    const [limit, setLimit] = useState();
 
    const fetchData = async () => {
@@ -20,6 +21,7 @@ const UserTable = () => {
       const response = await fetch(endpoint);
       const result = await response.json();
       setData(result.body.content);
+      setCount(result.body.content.length)
     } catch (error) {
       console.log('Erro ao buscar os dados');
     }
@@ -38,6 +40,7 @@ const UserTable = () => {
     initializeData();
   }, [limit]); // Re-run effect when limit changes
 
+  console.log(count)
   
   return (
     <>
@@ -93,7 +96,7 @@ const UserTable = () => {
                 <option value="100">100</option>
               </select>
               <span className={`${style.divisor}`}></span>
-              <p>1-10 de 100 itens</p>
+              <p>1-{count} de 100 itens</p>
             </div>
             <div className={`flex items-center mt-2 gap-3`}>
               <label for="pagination">Página</label>
