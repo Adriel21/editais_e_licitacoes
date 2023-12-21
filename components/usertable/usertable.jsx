@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import api from '@/app/services/api';
 import style from './style.module.css';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,16 +11,27 @@ library.add(fas);
 const UserTable = () => {
 
    const [data, setData] = useState([]);
-   const [count, setCount] = useState();
-   const [limit, setLimit] = useState();
+   const [pageable, setPageAble] = useState({
+    totalPages: 0,
+    totalElements: 0,
+    limit: null,
+    count: null,
+    pageNumber: 0
+  });  
+
 
    const fetchData = async () => {
     try {
-      const endpoint = limit ? `http://localhost:8080/index/list?size=${limit}` : `http://localhost:8080/index/list`
+      const endpoint = pageable.limit ? `http://localhost:8080/index/list?size=${pageable.limit}&page=${pageable.pageNumber}` : `http://localhost:8080/index/list?page=${pageable.pageNumber}`
       const response = await fetch(endpoint);
       const result = await response.json();
       setData(result.body.content);
-      setCount(result.body.content.length)
+      setPageAble((prevPageable) => ({
+        ...prevPageable,
+        totalPages: result.body.totalPages,
+        totalElements: result.body.totalElements,
+        count: result.body.content.length
+      }));
     } catch (error) {
       console.log('Erro ao buscar os dados');
     }
@@ -29,7 +39,18 @@ const UserTable = () => {
 
   const handleResultsChange = (event) => {
     const selectedResults = parseInt(event.target.value, 10);
-    setLimit(selectedResults);
+    setPageAble((prevPageable) => ({
+      ...prevPageable,
+      limit: selectedResults
+    }));
+  };
+
+  const handlePaginationChange = (event) => {
+    const selectedPage = parseInt(event.target.value, 10);
+    setPageAble((prevPageable) => ({
+      ...prevPageable,
+      pageNumber: selectedPage
+    }));
   };
 
   const initializeData = async () => {
@@ -38,9 +59,8 @@ const UserTable = () => {
 
   useEffect(() => {
     initializeData();
-  }, [limit]); // Re-run effect when limit changes
+  }, [pageable.limit, pageable.pageNumber]); // Re-run effect when limit changes
 
-  console.log(count)
   
   return (
     <>
@@ -96,17 +116,24 @@ const UserTable = () => {
                 <option value="100">100</option>
               </select>
               <span className={`${style.divisor}`}></span>
-              <p>1-{count} de 100 itens</p>
+              <p>1-{pageable.count} de {pageable.totalElements} itens</p>
             </div>
             <div className={`flex items-center mt-2 gap-3`}>
               <label for="pagination">Página</label>
-              <select name="pagination" id="" >
-                <option value="">5</option>
-                <option value="">10</option>
-                <option value="">25</option>
-                <option value="">50</option>
-                <option value="">100</option>
-              </select>
+              <select name="pagination" id="pagination" onChange={handlePaginationChange}>
+                {/* Loop for tradicional para gerar as opções */}
+                  {(() => {
+                    const options = [];
+                    for (let i = 0; i <= pageable.totalPages; i++) {
+                      options.push(
+                        <option key={i} value={i}>
+                           {i === 0 ? "Início" : i}
+                        </option>
+                      );
+                    }
+                    return options;
+                  })()}
+                </select>
             </div>
           </div>
         </div>
